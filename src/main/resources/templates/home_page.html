@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="/" method="get">
+        <input name="value1" th:value="${value1}"> <br>
+        <input name="value2" th:value="${value2}"> <br>
+        <input name="value3" th:value="${value3}"> <br>
+        <button>Посчитать</button>
+        <p th:text="${per}">Периметр</p>
+        <p th:text="${area}">Площадь</p>
+        <p></p>
+    </form>
+
+</body>
+</html>
