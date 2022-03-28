@@ -2,6 +2,7 @@ package com.example.triangle.customAdvice;
 
 
 import com.example.triangle.handleException.Handle;
+import com.example.triangle.serviseException.ServiceException;
 import com.example.triangle.response.Response;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
@@ -19,8 +20,8 @@ public class CustomAdvice extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(new Response(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Response> handleException(@NotNull Exception e) {
+    @ExceptionHandler(ServiceException.class)
+    public ResponseEntity<Response> handleException(@NotNull ServiceException e) {
         logger.error("ERROR CODE 500", e);
         return new ResponseEntity<>(new Response(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
