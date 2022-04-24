@@ -2,7 +2,9 @@ package com.example.triangle.customAdvice;
 
 
 import com.example.triangle.handleException.Handle;
+import com.example.triangle.myLogger.MyLogger;
 import com.example.triangle.response.Response;
+import com.example.triangle.serviceException.Service;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +17,13 @@ public class CustomAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Handle.class)
     public ResponseEntity<Response> handleException(@NotNull Handle e) {
-        logger.error("ERROR CODE 400", e);
+        MyLogger.error("ERROR CODE 400");
         return new ResponseEntity<>(new Response(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Response> handleException(@NotNull Exception e) {
-        logger.error("ERROR CODE 500", e);
+    @ExceptionHandler(Service.class)
+    public ResponseEntity<Response> handleException(@NotNull Service e) {
+        MyLogger.error("ERROR CODE 500");
         return new ResponseEntity<>(new Response(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
