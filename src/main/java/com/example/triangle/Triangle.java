@@ -11,13 +11,13 @@ import java.util.Objects;
 @Component
 public class Triangle {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private int firstSide;
+    private Integer firstSide;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private int secondSide;
+    private Integer secondSide;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private int thirdSide;
+    private Integer thirdSide;
 
     public Triangle(){}
     public class Sides{
@@ -30,7 +30,7 @@ public class Triangle {
             this.val3= val3;
         }
     }
-    public Triangle(int firstSide, int secondSide, int thirdSide){
+    public Triangle(Integer firstSide, Integer secondSide, Integer thirdSide){
         this.firstSide = firstSide;
         this.secondSide = secondSide;
         this.thirdSide = thirdSide;
@@ -49,7 +49,7 @@ public class Triangle {
         return Objects.hash(firstSide, secondSide, thirdSide);
     }
 
-    public static boolean canExist(int first, int second, int third){
+    public static boolean canExist(Integer first, Integer second, Integer third){
         return (first + second > third && first + third > second && second + third > first);
     }
 
@@ -57,7 +57,7 @@ public class Triangle {
         return firstSide;
     }
 
-    public void setFirstSide(int firstSide) {
+    public void setFirstSide(Integer firstSide) {
         this.firstSide = firstSide;
     }
 
@@ -65,13 +65,13 @@ public class Triangle {
         return secondSide;
     }
 
-    public void setSecondSide(int secondSide) {
+    public void setSecondSide(Integer secondSide) {
         this.secondSide = secondSide;
     }
 
     public int getThirdSide() { return thirdSide; }
 
-    public void setThirdSide(int thirdSide) {
+    public void setThirdSide(Integer thirdSide) {
         this.thirdSide = thirdSide;
     }
 

@@ -7,6 +7,7 @@ import com.example.triangle.services.CalcServ;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -14,15 +15,12 @@ import java.util.stream.Stream;
 public class CalcStream {
     private Repos cache;
 
-    public ArrayList<Triangle> inversionStream(Stream<Triangle.Sides> sides){
-
-        return sides.map(this::calc).collect(Collectors.toCollection(ArrayList::new));
+    public ArrayList<Triangle> calcStream(ArrayList<Integer> TrStream){
+        return TrStream.stream().map(this::calcPer).collect(Collectors.toCollection(ArrayList::new));
     }
-
-    public Triangle calc(Stream<Triangle.Sides> sides){
-        Triangle result = new Triangle(sides.val1, sides.val2, sides.val3);
-        cache.addPerimeter(result, CalcServ.calculatePerimeter(result));
-        cache.addSquare(result, CalcServ.calculateSquare(result));
+    public Triangle calcPer(Integer TrStream){
+        Triangle result = new Triangle(TrStream, TrStream, TrStream);
+        Integer per = CalcServ.calculatePerimeter(result);
         MyLogger.info("Calculated triangle");
         return result;
     }
