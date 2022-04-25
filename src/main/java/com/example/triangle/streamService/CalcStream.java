@@ -1,27 +1,52 @@
 package com.example.triangle.streamService;
 
+import com.example.triangle.TriangleSides;
 import com.example.triangle.Triangle;
 import com.example.triangle.myLogger.MyLogger;
 import com.example.triangle.repos.Repos;
-import com.example.triangle.services.CalcServ;
+import com.example.triangle.services.CalcService;
+//import org.apache.el.stream.Stream;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class CalcStream {
     private Repos cache;
-
-    public ArrayList<Triangle> calcStream(ArrayList<Integer> TrStream){
-        return TrStream.stream().map(this::calcPer).collect(Collectors.toCollection(ArrayList::new));
+    @Autowired
+    public CalcStream(Repos cache){
+        this.cache = cache;
     }
-    public Triangle calcPer(Integer TrStream){
-        Triangle result = new Triangle(TrStream, TrStream, TrStream);
-        Integer per = CalcServ.calculatePerimeter(result);
-        MyLogger.info("Calculated triangle");
-        return result;
+
+    public Integer calcPerStream(List<Integer> TrStream){
+        Integer sideFlag = 0;
+        Triangle result = new Triangle();
+
+        for (Integer side : TrStream) {
+            if(sideFlag == 0){
+                result.setFirstSide(side);
+                sideFlag++;
+            }
+            else if(sideFlag == 1){
+                result.setSecondSide(side);
+                sideFlag++;
+            }
+            else if (sideFlag == 2) {
+                result.setThirdSide(side);
+                sideFlag++;
+            }
+        }
+        cache.addPerimeter(result, CalcService.calculatePerimeter(result));
+        MyLogger.info("Calculated triangle perimeter");
+        return CalcService.calculatePerimeter(result);
+    }
+
+    public TriangleSides sideStream(List<Integer> arr){
+        Double max = arr.stream().map(Integer::doubleValue).max(Comparator.comparingDouble(Double::doubleValue)).orElse(0d);
+        Double min = arr.stream().map(Integer::doubleValue).min(Comparator.comparingDouble(Double::doubleValue)).orElse(0d);
+        Double mid = arr.stream().mapToDouble(Integer::doubleValue).average().orElse(0);
+        return new TriangleSides(min, mid, max);
     }
 }

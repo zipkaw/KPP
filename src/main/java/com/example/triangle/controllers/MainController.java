@@ -1,19 +1,21 @@
 package com.example.triangle.controllers;
 
+import com.example.triangle.TriangleSides;
 import com.example.triangle.Triangle;
 import com.example.triangle.repos.Repos;
-import com.example.triangle.services.CalcServ;
+import com.example.triangle.services.CalcService;
 import com.example.triangle.services.Counter;
 import com.example.triangle.streamService.CalcStream;
 import com.example.triangle.validation.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,15 +50,15 @@ public class MainController {
             if (Validation.existing(tr.canExist(Integer.parseInt(value1), Integer.parseInt(value2), Integer.parseInt(value3)))) {
                 if (db.getMp().containsKey(tr)) {
                     if (db.getMp().get(tr).getSquare() == 0.0 && db.getMp().get(tr).getPerimeter() == 0.0) {
-                        db.getMp().get(tr).setPerimeter(CalcServ.calculatePerimeter(tr));
-                        db.getMp().get(tr).setSquare(CalcServ.calculateSquare(tr));
+                        db.getMp().get(tr).setPerimeter(CalcService.calculatePerimeter(tr));
+                        db.getMp().get(tr).setSquare(CalcService.calculateSquare(tr));
                     }
                 } else {
-                    db.addPerimeter(tr, CalcServ.calculatePerimeter(tr));
-                    db.addSquare(tr, CalcServ.calculateSquare(tr));
+                    db.addPerimeter(tr, CalcService.calculatePerimeter(tr));
+                    db.addSquare(tr, CalcService.calculateSquare(tr));
                 }
             }
-            per = CalcServ.calculatePerimeter(tr);
+            per = CalcService.calculatePerimeter(tr);
             area = db.getMp().get(tr).getSquare();
             model.addAttribute("value1", value1);
             model.addAttribute("value2", value2);
@@ -70,9 +72,21 @@ public class MainController {
     public ResponseEntity getCount(){
         return new ResponseEntity(counter.getCount(), HttpStatus.OK);
     }
-    @PostMapping("/Stream")
-    public ArrayList<Triangle> getControllerStream(@RequestBody ArrayList<Integer> ent_stream){
-        ArrayList<Triangle> result = serv.calcStream(ent_stream);
-        return result;
+    //LR5
+    @PostMapping(value = "/perimeter/stream",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+
+    public ResponseEntity<Integer> getPerimeterStream(@RequestBody List<Integer> array){
+        return new ResponseEntity<>(serv.calcPerStream(array), HttpStatus.OK);
     }
+    //LR6
+    @PostMapping(value = "/data/stream",
+                produces = MediaType.APPLICATION_JSON_VALUE,
+                consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TriangleSides> getControllerStream(@RequestBody List<Integer> array){
+        //serv.calcStream(ent_stream);
+        return new ResponseEntity<>(serv.sideStream(array), HttpStatus.OK);
+    }
+
 }

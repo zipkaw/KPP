@@ -3,33 +3,27 @@ package com.example.triangle;
 import com.example.triangle.repos.Repos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.stereotype.Component;
 
 //import javax.validation.constraints.*;
 import java.util.Objects;
 
 @Component
+@Data
 public class Triangle {
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty
     private Integer firstSide;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty
     private Integer secondSide;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty
     private Integer thirdSide;
 
     public Triangle(){}
-    public class Sides{
-        public  int val1;
-        public  int val2;
-        public  int val3;
-        public Sides (int val1, int val2, int val3){
-            this.val1= val1;
-            this.val2= val2;
-            this.val3= val3;
-        }
-    }
+
     public Triangle(Integer firstSide, Integer secondSide, Integer thirdSide){
         this.firstSide = firstSide;
         this.secondSide = secondSide;

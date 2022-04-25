@@ -2,7 +2,7 @@ package com.example.triangle.services;
 
 import com.example.triangle.Triangle;
 
-public class CalcServ {
+public class CalcService {
     public static int calculatePerimeter(Triangle triangle){
         return triangle.getFirstSide() + triangle.getSecondSide() + triangle.getThirdSide();
     }
