@@ -78,7 +78,7 @@ public class MainController {
             consumes = MediaType.APPLICATION_JSON_VALUE)
 
     public ResponseEntity<Integer> getPerimeterStream(@RequestBody List<Integer> array){
-        return new ResponseEntity<>(serv.calcPerStream(array), HttpStatus.OK);
+        return new ResponseEntity<>(serv.result.Calculate(array), HttpStatus.OK);
     }
     //LR6
     @PostMapping(value = "/data/stream",

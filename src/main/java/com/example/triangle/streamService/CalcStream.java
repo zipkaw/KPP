@@ -3,6 +3,7 @@ package com.example.triangle.streamService;
 import com.example.triangle.TriangleSides;
 import com.example.triangle.Triangle;
 import com.example.triangle.myLogger.MyLogger;
+import com.example.triangle.perimeterInterface.PerimeterInterface;
 import com.example.triangle.repos.Repos;
 import com.example.triangle.services.CalcService;
 //import org.apache.el.stream.Stream;
@@ -20,20 +21,17 @@ public class CalcStream {
         this.cache = cache;
     }
 
-    public Integer calcPerStream(List<Integer> TrStream){
+    public PerimeterInterface result = (numbers) -> {
         Integer sideFlag = 0;
         Triangle result = new Triangle();
-
-        for (Integer side : TrStream) {
-            if(sideFlag == 0){
+        for (Integer side : numbers) {
+            if (sideFlag == 0) {
                 result.setFirstSide(side);
                 sideFlag++;
-            }
-            else if(sideFlag == 1){
+            } else if (sideFlag == 1) {
                 result.setSecondSide(side);
                 sideFlag++;
-            }
-            else if (sideFlag == 2) {
+            } else if (sideFlag == 2) {
                 result.setThirdSide(side);
                 sideFlag++;
             }
@@ -41,7 +39,7 @@ public class CalcStream {
         cache.addPerimeter(result, CalcService.calculatePerimeter(result));
         MyLogger.info("Calculated triangle perimeter");
         return CalcService.calculatePerimeter(result);
-    }
+    };
 
     public TriangleSides sideStream(List<Integer> arr){
         Double max = arr.stream().map(Integer::doubleValue).max(Comparator.comparingDouble(Double::doubleValue)).orElse(0d);
