@@ -1,8 +1,8 @@
 package com.example.triangle.controllers;
-
 import com.example.triangle.TriangleSides;
 import com.example.triangle.Triangle;
 import com.example.triangle.repos.Repos;
+import com.example.triangle.repos.TriangleRepository;
 import com.example.triangle.services.CalcService;
 import com.example.triangle.services.Counter;
 import com.example.triangle.streamService.CalcStream;
@@ -27,12 +27,14 @@ public class MainController {
     private final CalcStream serv;
     private Repos db;
     private Counter counter;
+    private TriangleRepository triangleRepository;
 
     @Autowired
-    public MainController(CalcStream serv, Repos db, Counter counter){
+    public MainController(CalcStream serv, Repos db, Counter counter, TriangleRepository triangleRepository){
         this.serv = serv;
         this.db = db;
         this.counter = counter;
+        this.triangleRepository = triangleRepository;
     }
 
     @GetMapping("/")
@@ -88,5 +90,5 @@ public class MainController {
         //serv.calcStream(ent_stream);
         return new ResponseEntity<>(serv.sideStream(array), HttpStatus.OK);
     }
-
+    //LR7
 }

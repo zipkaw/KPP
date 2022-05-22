@@ -5,21 +5,26 @@ import com.example.triangle.repos.Repos;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.stereotype.Component;
 
 //import javax.validation.constraints.*;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Component
 @Data
+@Entity
 public class Triangle {
-    @JsonProperty
+
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private  Long id;
     private Integer firstSide;
-
-    @JsonProperty
     private Integer secondSide;
-
-    @JsonProperty
     private Integer thirdSide;
 
     public Triangle(){}
